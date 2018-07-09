@@ -71,11 +71,12 @@ def _extremely_lazy_documentation_headings(url):
     headings = [
         '{} {}'.format(
             '##' if elem.tag == 'h2' else '###',
-            elem.text_content()
+            elem.text_content().lower()
         )
         for elem in root.xpath('//h2|//h3')
     ]
     
     for h in headings:
-        if h not in ['### Stay Connected', '### Support']:
+        if h not in ['### stay connected', '### support']:
             print(h)
+    print('# summary')
