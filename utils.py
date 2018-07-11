@@ -39,7 +39,7 @@ def rename_nodes(graph_def, rename_func):
     return res_def
 
 
-def show_graph(graph_def=None, max_const_size=32):
+def show_graph(graph_def=None, max_const_size=32, make_huge=False):
     """Visualize TensorFlow graph.
     stolen from: https://blog.jakuba.net/2017/05/30/tensorflow-visualization.html
     """
@@ -54,14 +54,21 @@ def show_graph(graph_def=None, max_const_size=32):
           }}
         </script>
         <link rel="import" href="https://tensorboard.appspot.com/tf-graph-basic.build.html" onload=load()>
-        <div style="height:600px">
+        <div style="height:{div_height_px}px">
           <tf-graph-basic id="{id}"></tf-graph-basic>
         </div>
-    """.format(data=repr(str(strip_def)), id='graph'+str(np.random.rand()))
+    """.format(
+        data=repr(str(strip_def)), 
+        id='graph' + str(np.random.rand()),
+        div_height_px=1000 if make_huge else 600,
+    )
   
     iframe = """
-        <iframe seamless style="width:800px;height:620px;border:0" srcdoc="{}"></iframe>
-    """.format(code.replace('"', '&quot;'))
+        <iframe seamless style="width:100%;height:{}px;border:0" srcdoc="{}"></iframe>
+    """.format(
+        1020 if make_huge else 620,
+        code.replace('"', '&quot;')
+    )
     display(HTML(iframe))
 
 
